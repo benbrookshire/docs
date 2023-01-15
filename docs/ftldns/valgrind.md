@@ -53,6 +53,12 @@ If you compile FTL from source, use
 ./build.sh && sudo service pihole-FTL stop && sudo setcap -r /usr/bin/pihole-FTL && sudo valgrind --trace-children=yes --leak-check=full --track-origins=yes --log-file=valgrind.log -s ./pihole-FTL
 ```
 
+The most useful information (about which memory is *possibly* and which is *definitely* lost) is written to `valgrind.log` at the end of the analysis. Terminate FTL by running:
+
+```bash
+sudo kill -TERM $(cat /var/run/pihole-FTL.pid)
+```
+
 The used options are:
 
 1. `trace-children=yes` - Valgrind will trace into sub-processes initiated via the exec system call. This is necessary for multi-process programs. We use this to go down into possibly user scripts on DHCP activity, etc.
